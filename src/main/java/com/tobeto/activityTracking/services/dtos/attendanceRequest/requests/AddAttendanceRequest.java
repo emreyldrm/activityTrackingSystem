@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class AddAttendanceRequest {
 
     private int userId;
+    private int recipientId;
     private int eventId;
 
 }

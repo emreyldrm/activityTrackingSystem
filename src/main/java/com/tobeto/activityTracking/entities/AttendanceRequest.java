@@ -18,6 +18,10 @@ public class AttendanceRequest {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "recipient_id")
+    private User recipient;
+
+    @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 

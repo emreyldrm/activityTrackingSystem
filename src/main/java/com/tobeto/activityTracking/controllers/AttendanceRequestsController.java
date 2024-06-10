@@ -5,7 +5,9 @@ import com.tobeto.activityTracking.services.dtos.attendanceRequest.requests.AddA
 import com.tobeto.activityTracking.services.dtos.attendanceRequest.requests.DeleteAttendanceRequest;
 import com.tobeto.activityTracking.services.dtos.attendanceRequest.requests.UpdateAttendanceRequest;
 import com.tobeto.activityTracking.services.dtos.attendanceRequest.responses.GetAllAttendanceRequestByEventIdResponse;
+import com.tobeto.activityTracking.services.dtos.attendanceRequest.responses.GetAllAttendanceRequestByRecipientIdResponse;
 import com.tobeto.activityTracking.services.dtos.attendanceRequest.responses.GetAttendanceRequestByIdResponse;
+import com.tobeto.activityTracking.services.dtos.notification.responses.GetAllNotificationByRecipientIdResponse;
 import com.tobeto.activityTracking.services.dtos.user.requests.CreateUserRequest;
 import com.tobeto.activityTracking.services.dtos.user.requests.DeleteUserRequest;
 import com.tobeto.activityTracking.services.dtos.user.requests.UpdateUserRequest;
@@ -19,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/attendanceRequests")
 @AllArgsConstructor
+@CrossOrigin
 public class AttendanceRequestsController {
 
     private final AttendanceRequestService attendanceRequestService;
@@ -38,6 +41,10 @@ public class AttendanceRequestsController {
     @GetMapping("allAttendance/event/{id}")
     private List<GetAllAttendanceRequestByEventIdResponse> getAllByEventId(@PathVariable int id){
         return attendanceRequestService.getAllByEventId(id);
+    }
+    @GetMapping("allAttendance/recipient/{id}")
+    private List<GetAllAttendanceRequestByRecipientIdResponse> getAllByRecipientId(@PathVariable int id){
+        return attendanceRequestService.getAllByRecipientId(id);
     }
     @GetMapping("{id}")
     private GetAttendanceRequestByIdResponse getByIdResponse(@PathVariable int id){

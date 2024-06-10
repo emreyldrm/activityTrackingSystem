@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllAttendanceRequestByEventIdResponse {
+public class GetAllAttendanceRequestByRecipientIdResponse {
 
     private int id;
     private int userId;

@@ -2,14 +2,17 @@ package com.tobeto.activityTracking.services.concretes;
 
 import com.tobeto.activityTracking.core.utilities.mappers.ModelMapperService;
 import com.tobeto.activityTracking.entities.Event;
+import com.tobeto.activityTracking.entities.User;
 import com.tobeto.activityTracking.repositories.EventRepository;
 import com.tobeto.activityTracking.services.abstracts.EventService;
 import com.tobeto.activityTracking.services.abstracts.UserService;
 import com.tobeto.activityTracking.services.dtos.event.requests.AddEventRequest;
 import com.tobeto.activityTracking.services.dtos.event.requests.DeleteEventRequest;
 import com.tobeto.activityTracking.services.dtos.event.requests.UpdateEventRequest;
+import com.tobeto.activityTracking.services.dtos.event.responses.GetAllEventByOwnerIdResponse;
 import com.tobeto.activityTracking.services.dtos.event.responses.GetAllEventResponse;
 import com.tobeto.activityTracking.services.dtos.event.responses.GetEventByIdResponse;
+import com.tobeto.activityTracking.services.dtos.notification.responses.GetAllNotificationByRecipientIdResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +55,16 @@ public class EventManager implements EventService {
                 .map(event -> this.modelMapperService.forResponse().map(event, GetAllEventResponse.class))
                 .toList();
         return eventResponses;
+    }
+
+    @Override
+    public List<GetAllEventByOwnerIdResponse> getAllByOwnerId(int ownerId) {
+        User owner = userService.getById(ownerId);
+        List<Event> events = eventRepository.findByOwner(owner);
+        List<GetAllEventByOwnerIdResponse> eventByOwnerIdResponses = events.stream()
+                .map(event -> this.modelMapperService.forResponse().map(event, GetAllEventByOwnerIdResponse.class))
+                .toList();
+        return eventByOwnerIdResponses;
     }
 
     @Override

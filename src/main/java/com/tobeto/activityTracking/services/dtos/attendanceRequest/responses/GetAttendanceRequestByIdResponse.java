@@ -12,6 +12,7 @@ public class GetAttendanceRequestByIdResponse {
 
     private int id;
     private int userId;
+    private int recipientId;
     private int eventId;
     private Status status;
 }

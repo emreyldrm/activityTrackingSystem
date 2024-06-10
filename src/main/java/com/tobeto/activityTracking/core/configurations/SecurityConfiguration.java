@@ -41,8 +41,8 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
                         .requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/attendanceRequests/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/**").hasAnyAuthority(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.GET,"/api/users/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/attendanceRequests/**").hasAnyAuthority(Role.ADMIN.name())
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

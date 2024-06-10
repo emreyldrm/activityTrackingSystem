@@ -4,6 +4,7 @@ import com.tobeto.activityTracking.core.utilities.mappers.ModelMapperService;
 import com.tobeto.activityTracking.entities.AttendanceRequest;
 import com.tobeto.activityTracking.entities.Event;
 import com.tobeto.activityTracking.entities.Status;
+import com.tobeto.activityTracking.entities.User;
 import com.tobeto.activityTracking.repositories.AttendanceRequestRepository;
 import com.tobeto.activityTracking.services.abstracts.AttendanceRequestService;
 import com.tobeto.activityTracking.services.abstracts.EventService;
@@ -12,8 +13,10 @@ import com.tobeto.activityTracking.services.dtos.attendanceRequest.requests.AddA
 import com.tobeto.activityTracking.services.dtos.attendanceRequest.requests.DeleteAttendanceRequest;
 import com.tobeto.activityTracking.services.dtos.attendanceRequest.requests.UpdateAttendanceRequest;
 import com.tobeto.activityTracking.services.dtos.attendanceRequest.responses.GetAllAttendanceRequestByEventIdResponse;
+import com.tobeto.activityTracking.services.dtos.attendanceRequest.responses.GetAllAttendanceRequestByRecipientIdResponse;
 import com.tobeto.activityTracking.services.dtos.attendanceRequest.responses.GetAttendanceRequestByIdResponse;
 
+import com.tobeto.activityTracking.services.dtos.notification.responses.GetAllNotificationByRecipientIdResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +67,16 @@ public class AttendanceRequestManager implements AttendanceRequestService {
                 .map(attendanceRequest -> this.modelMapperService.forResponse().map(attendanceRequest, GetAllAttendanceRequestByEventIdResponse.class))
                 .toList();
         return attendanceRequestByEventIdResponses;
+    }
+
+    @Override
+    public List<GetAllAttendanceRequestByRecipientIdResponse> getAllByRecipientId(int recipientId) {
+        User recipient = userService.getById(recipientId);
+        List<AttendanceRequest> attendanceRequests = attendanceRequestRepository.findByRecipient(recipient);
+        List<GetAllAttendanceRequestByRecipientIdResponse> attendanceRequestByRecipientIdResponses = attendanceRequests.stream()
+                .map(attendanceRequest -> this.modelMapperService.forResponse().map(attendanceRequest, GetAllAttendanceRequestByRecipientIdResponse.class))
+                .toList();
+        return attendanceRequestByRecipientIdResponses;
     }
 
     @Override

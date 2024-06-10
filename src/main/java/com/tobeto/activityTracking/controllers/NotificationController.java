@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/notifications")
 @AllArgsConstructor
+@CrossOrigin
 public class NotificationController {
 
     private final NotificationService notificationService;
@@ -27,7 +28,7 @@ public class NotificationController {
     private void delete(@RequestBody DeleteNotificationRequest deleteNotificationRequest){
         notificationService.delete(deleteNotificationRequest);
     }
-    @GetMapping("allAttendance/recipient/{id}")
+    @GetMapping("allNotifications/recipient/{id}")
     private List<GetAllNotificationByRecipientIdResponse> getAllByRecipientId(@PathVariable int id){
         return notificationService.getAllByRecipientId(id);
     }
